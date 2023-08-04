@@ -31,6 +31,14 @@ module.exports = {
                     type: Sequelize.STRING,
                     allowNull: false,
                 },
+                firstName: {
+                    type: Sequelize.STRING,
+                    allowNull: false,
+                },
+                lastName: {
+                    type: Sequelize.STRING,
+                    allowNull: false,
+                },
                 createdAt: {
                     allowNull: false,
                     type: Sequelize.DATE,
@@ -47,6 +55,6 @@ module.exports = {
     },
     async down(queryInterface, Sequelize) {
         options.tableName = "Users";
-        return queryInterface.dropTable("Users");
+        return queryInterface.dropTable("Users", options);
     },
 };
