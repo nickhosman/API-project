@@ -44,7 +44,8 @@ module.exports = {
                     lastName: "Mackerel",
                 },
             ],
-            { validate: true }
+            { validate: true },
+            options
         );
     },
 
