@@ -5,8 +5,6 @@ if (process.env.NODE_ENV === "production") {
     options.schema = process.env.SCHEMA;
 }
 
-options.tableName = "Users";
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
@@ -18,10 +16,10 @@ module.exports = {
          */
         await queryInterface.addColumn("Users", "firstName", {
             type: Sequelize.STRING,
-        });
+        }, options);
         await queryInterface.addColumn("Users", "lastName", {
             type: Sequelize.STRING,
-        });
+        }, options);
     },
 
     async down(queryInterface, Sequelize) {
@@ -31,6 +29,7 @@ module.exports = {
          * Example:
          * await queryInterface.dropTable('users');
          */
+        options.tableName = "Users";
         await queryInterface.removeColumn("Users", "firstName");
         await queryInterface.removeColumn("Users", "lastName");
     },
