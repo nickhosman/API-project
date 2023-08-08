@@ -122,7 +122,7 @@ router.get("/:spotId", async (req, res, next) => {
     return res.json(spot);
 });
 
-const validateNewSpot = [
+const validateSpot = [
     check("address")
         .exists({ checkFalsy: true })
         .withMessage("Street address is required"),
@@ -159,7 +159,7 @@ const validateNewSpot = [
     requireAuth,
 ];
 // Create a new spot as an authorized user
-router.post("/", validateNewSpot, async (req, res, next) => {
+router.post("/", validateSpot, async (req, res, next) => {
     const {
         address,
         city,
@@ -216,6 +216,45 @@ router.post("/:spotId/images", requireAuth, async (req, res, next) => {
     return next(err);
 });
 
+// Updates and returns an existing spot.
+router.put("/:spotId", validateSpot, async (req, res, next) => {
+    const spot = await Spot.findByPk(req.params.spotId);
 
+    if (spot) {
+        if (spot.ownerId === req.user.id) {
+            const {
+                address,
+                city,
+                state,
+                country,
+                lat,
+                lng,
+                name,
+                description,
+                price,
+            } = req.body;
+
+            if (address) spot.address = address;
+            if (city) spot.city = city;
+            if (state) spot.state = state;
+            if (country) spot.country = country;
+            if (lat) spot.lat = lat;
+            if (lng) spot.lng = lng;
+            if (name) spot.name = name;
+            if (description) spot.description = description;
+            if (price) spot.price = price;
+
+            await spot.save();
+
+            res.json(spot);
+        }
+    }
+
+    const err = new Error("Spot couldn't be found");
+    err.title = "Spot couldn't be found";
+    err.errors = { message: "Spot couldn't be found" };
+    err.status = 404;
+    return next(err);
+});
 
 module.exports = router;
