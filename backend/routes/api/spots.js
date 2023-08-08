@@ -158,7 +158,7 @@ const validateNewSpot = [
     handleValidationErrors,
     requireAuth,
 ];
-
+// Create a new spot as an authorized user
 router.post("/", validateNewSpot, async (req, res, next) => {
     const {
         address,
@@ -187,5 +187,35 @@ router.post("/", validateNewSpot, async (req, res, next) => {
 
     return res.json(spot);
 });
+
+// Add an image to a spot based on Spot's id
+router.post("/:spotId/images", requireAuth, async (req, res, next) => {
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    if (spot) {
+        if (req.user.id === spot.ownerId) {
+            const { url, preview } = req.body;
+            const newSpotImage = await SpotImage.create({
+                spotId: req.params.spotId,
+                url,
+                preview,
+            });
+
+            return res.json({
+                id: newSpotImage.id,
+                url: newSpotImage.url,
+                preview: newSpotImage.preview,
+            });
+        }
+    }
+
+    const err = new Error("Spot couldn't be found");
+    err.title = "Spot couldn't be found";
+    err.errors = { message: "Spot couldn't be found" };
+    err.status = 404;
+    return next(err);
+});
+
+
 
 module.exports = router;
