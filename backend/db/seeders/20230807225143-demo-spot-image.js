@@ -16,12 +16,12 @@ module.exports = {
                 {
                     spotId: 1,
                     url: "https://images.pexels.com/photos/1131573/pexels-photo-1131573.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-                    preview: false,
+                    preview: true,
                 },
                 {
                     spotId: 2,
                     url: "https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-                    preview: false,
+                    preview: true,
                 },
                 {
                     spotId: 3,
