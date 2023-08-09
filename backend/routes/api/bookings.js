@@ -123,7 +123,7 @@ router.put("/:bookingId", validateBooking, async (req, res, next) => {
                 }
             }
 
-            const currTime = Date.now()
+            const currTime = Date.now();
             if (currTime > endValue) {
                 const err = new Error("Past bookings can't be modified");
                 err.title = "Past bookings can't be modified";
@@ -149,5 +149,37 @@ router.put("/:bookingId", validateBooking, async (req, res, next) => {
 });
 
 // Delete a booking
+router.delete("/:bookingId", requireAuth, async (req, res, next) => {
+    const booking = await Booking.findByPk(req.params.bookingId);
+
+    if (booking) {
+        const spot = await Spot.findByPk(booking.spotId);
+        const currTime = Date.now();
+        const startDate = new Date(booking.startDate).getTime();
+
+        if (currTime > startDate) {
+            const err = new Error(
+                "Bookings that have been started can't be deleted"
+            );
+            err.title = "Bookings that have been started can't be deleted";
+            err.errors = {
+                message: "Bookings that have been started can't be deleted",
+            };
+            err.status = 403;
+            return next(err);
+        }
+
+        if (booking.userId === req.user.id || spot.ownerId === req.user.id) {
+            booking.destroy();
+            return res.json({ message: "Succesfully deleted" });
+        }
+    }
+
+    const err = new Error("Booking couldn't be found");
+    err.title = "Booking couldn't be found";
+    err.errors = { message: "Booking couldn't be found" };
+    err.status = 404;
+    return next(err);
+});
 
 module.exports = router;
