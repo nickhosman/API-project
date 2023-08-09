@@ -13,9 +13,10 @@ const {
 
 const router = express.Router();
 
+// Get all reviews by currently logged in user
 router.get("/current", requireAuth, async (req, res, next) => {
     let Reviews = [];
-
+    // Get reviews
     const reviews = await Review.findAll({
         where: { userId: req.user.id },
         include: [
@@ -30,7 +31,7 @@ router.get("/current", requireAuth, async (req, res, next) => {
             { model: ReviewImage, attributes: ["id", "url"] },
         ],
     });
-
+    // Modifying data of each review to match output requirements
     reviews.forEach((review) => {
         review = review.toJSON();
         review.Spot.SpotImages.forEach((spotImage) => {
@@ -38,10 +39,15 @@ router.get("/current", requireAuth, async (req, res, next) => {
                 review.Spot.previewImage = spotImage.url;
             }
         });
+        if (!review.Spot.previewImage) {
+            review.Spot.previewImage = "No preview image found";
+        }
         delete review.Spot.SpotImages;
         Reviews.push(review);
     });
     res.json({ Reviews });
 });
+
+// Get all reviews for a spot by id
 
 module.exports = router;

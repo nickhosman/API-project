@@ -7,7 +7,13 @@ const {
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 
-const { Spot, SpotImage, User, Review } = require("../../db/models");
+const {
+    Spot,
+    SpotImage,
+    User,
+    Review,
+    ReviewImage,
+} = require("../../db/models");
 
 const router = express.Router();
 
@@ -274,5 +280,29 @@ router.delete("/:spotId", requireAuth, async (req, res, next) => {
     err.status = 404;
     return next(err);
 });
+
+// Get all reviews by spot id
+router.get("/:spotId/reviews", async (req, res, next) => {
+    const Reviews = await Review.findAll({
+        where: { spotId: req.params.spotId },
+        include: [
+            { model: User, attributes: ["id", "firstName", "lastName"] },
+            { model: ReviewImage, attributes: ["id", "url"] },
+        ],
+    });
+    console.log(Reviews);
+
+    if (!Reviews.length) {
+        const err = new Error("Spot couldn't be found");
+        err.title = "Spot couldn't be found";
+        err.errors = { message: "Spot couldn't be found" };
+        err.status = 404;
+        return next(err);
+    }
+
+    return res.json({ Reviews });
+});
+
+
 
 module.exports = router;
