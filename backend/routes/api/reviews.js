@@ -94,4 +94,42 @@ router.post("/:reviewId/images", requireAuth, async (req, res, next) => {
     return next(err);
 });
 
+const validateReview = [
+    check("review")
+        .exists({ checkFalsy: true })
+        .withMessage("Review text is required"),
+    check("stars")
+        .exists({ checkFalsy: true })
+        .custom((value) => {
+            return parseInt(value) < 6 && parseInt(value) > 0;
+        })
+        .withMessage("Stars must be an integer from 1 to 5"),
+    handleValidationErrors,
+    requireAuth,
+];
+
+// Edit an existing review
+router.put("/:reviewId", validateReview, async (req, res, next) => {
+    const thisReview = await Review.findByPk(req.params.reviewId);
+
+    if (thisReview) {
+        if (req.user.id === thisReview.userId) {
+            const { review, stars } = req.body;
+
+            thisReview.review = review;
+            thisReview.stars = stars;
+
+            thisReview.save();
+
+            return res.json(thisReview);
+        }
+    }
+
+    const err = new Error("Review couldn't be found");
+    err.title = "Review couldn't be found";
+    err.errors = { message: "Review couldn't be found" };
+    err.status = 404;
+    return next(err);
+});
+
 module.exports = router;
