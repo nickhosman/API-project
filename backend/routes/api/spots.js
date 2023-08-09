@@ -13,6 +13,7 @@ const {
     User,
     Review,
     ReviewImage,
+    Booking,
 } = require("../../db/models");
 
 const router = express.Router();
@@ -344,6 +345,39 @@ router.post("/:spotId/reviews", validateReview, async (req, res, next) => {
         });
 
         return res.json(newReview);
+    }
+
+    const err = new Error("Spot couldn't be found");
+    err.title = "Spot couldn't be found";
+    err.errors = { message: "Spot couldn't be found" };
+    err.status = 404;
+    return next(err);
+});
+
+// Get all bookings for a spot specified by id
+router.get("/:spotId/bookings", requireAuth, async (req, res, next) => {
+    const spot = await Spot.findByPk(req.params.spotId);
+    let bookings;
+
+    if (spot) {
+        if (req.user.id !== spot.ownerId) {
+            bookings = await Booking.findAll({
+                where: { spotId: req.params.spotId },
+                attributes: ["spotId", "startDate", "endDate"],
+            });
+        } else {
+            bookings = await Booking.findAll({
+                where: { spotId: req.params.spotId },
+                include: [
+                    {
+                        model: User,
+                        attributes: ["id", "firstName", "lastName"],
+                    },
+                ],
+            });
+        }
+
+        return res.json({ Bookings: bookings });
     }
 
     const err = new Error("Spot couldn't be found");
