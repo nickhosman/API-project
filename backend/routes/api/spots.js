@@ -415,11 +415,11 @@ router.post("/:spotId/bookings", validateBooking, async (req, res, next) => {
         const bookings = await spot.getBookings();
 
         if (bookings.length > 0) {
-            bookings.forEach((booking) => {
+            for (const currBooking of bookings) {
                 const startValue = new Date(startDate).getTime();
                 const endValue = new Date(endDate).getTime();
-                const bookingStart = new Date(booking.startDate).getTime();
-                const bookingEnd = new Date(booking.endDate).getTime();
+                const bookingStart = new Date(currBooking.startDate).getTime();
+                const bookingEnd = new Date(currBooking.endDate).getTime();
 
                 let bookingErr = [];
 
@@ -447,7 +447,7 @@ router.post("/:spotId/bookings", validateBooking, async (req, res, next) => {
                     err.status = 403;
                     return next(err);
                 }
-            });
+            };
         }
 
         if (spot.ownerId !== req.user.id) {
