@@ -16,14 +16,14 @@ module.exports = {
                 {
                     spotId: 1,
                     userId: 2,
-                    startDate: "9-17-2023",
-                    endDate: "9-23-2023",
+                    startDate: "2023-9-17",
+                    endDate: "2023-9-23",
                 },
                 {
                     spotId: 3,
                     userId: 1,
-                    startDate: "8-13-2023",
-                    endDate: "8-16-2023",
+                    startDate: "2023-8-13",
+                    endDate: "2023-8-16",
                 },
             ],
             { validate: true }
@@ -37,7 +37,7 @@ module.exports = {
             options,
             {
                 startDate: {
-                    [Op.in]: ["9-17-2023", "8-13-2023"],
+                    [Op.in]: ["2023-9-17", "2023-8-13"],
                 },
             },
             {}
