@@ -303,6 +303,54 @@ router.get("/:spotId/reviews", async (req, res, next) => {
     return res.json({ Reviews });
 });
 
+const validateReview = [
+    check("review")
+        .exists({ checkFalsy: true })
+        .withMessage("Review text is required"),
+    check("stars")
+        .exists({ checkFalsy: true })
+        .custom((value) => {
+            return parseInt(value) < 6 && parseInt(value) > 0;
+        })
+        .withMessage("Stars must be an integer from 1 to 5"),
+    handleValidationErrors,
+    requireAuth,
+];
 
+// Create a review for a spot
+router.post("/:spotId/reviews", validateReview, async (req, res, next) => {
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    if (spot) {
+        const thisReview = await Review.findOne({
+            where: { userId: req.user.id, spotId: req.params.spotId },
+        });
+
+        if (thisReview) {
+            const err = new Error("User already has a review for this spot");
+            err.title = "User already has a review for this spot";
+            err.errors = { message: "User already has a review for this spot" };
+            err.status = 500;
+            return next(err);
+        }
+
+        const { review, stars } = req.body;
+
+        const newReview = await Review.create({
+            spotId: req.params.spotId,
+            userId: req.user.id,
+            review,
+            stars,
+        });
+
+        return res.json(newReview);
+    }
+
+    const err = new Error("Spot couldn't be found");
+    err.title = "Spot couldn't be found";
+    err.errors = { message: "Spot couldn't be found" };
+    err.status = 404;
+    return next(err);
+});
 
 module.exports = router;
