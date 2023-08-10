@@ -138,6 +138,12 @@ router.put("/:bookingId", validateBooking, async (req, res, next) => {
             await booking.save();
 
             return res.json(booking);
+        } else {
+            const err = new Error("Forbidden");
+            err.title = "Forbidden";
+            err.errors = { message: "Not authorized to take this action" };
+            err.status = 403;
+            return next(err);
         }
     }
 
@@ -172,6 +178,12 @@ router.delete("/:bookingId", requireAuth, async (req, res, next) => {
         if (booking.userId === req.user.id || spot.ownerId === req.user.id) {
             booking.destroy();
             return res.json({ message: "Succesfully deleted" });
+        } else {
+            const err = new Error("Forbidden");
+            err.title = "Forbidden";
+            err.errors = { message: "Not authorized to take this action" };
+            err.status = 403;
+            return next(err);
         }
     }
 

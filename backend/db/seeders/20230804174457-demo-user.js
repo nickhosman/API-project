@@ -34,6 +34,13 @@ module.exports = {
                     firstName: "Holly",
                     lastName: "Mackerel",
                 },
+                {
+                    email: "peter@mail.us",
+                    username: "petey",
+                    hashedPassword: bcrypt.hashSync("password4"),
+                    firstName: "Peter",
+                    lastName: "Andler",
+                },
             ],
             { validate: true }
         );
@@ -52,7 +59,12 @@ module.exports = {
             options,
             {
                 username: {
-                    [Op.in]: ["Demo-lition", "myeself", "HolyMackerel"],
+                    [Op.in]: [
+                        "Demo-lition",
+                        "myeself",
+                        "HolyMackerel",
+                        "petey",
+                    ],
                 },
             },
             {}

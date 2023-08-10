@@ -49,6 +49,18 @@ module.exports = {
                     description: "A temporary home for you.",
                     price: 38.64,
                 },
+                {
+                    ownerId: 4,
+                    address: "1337 Hacker Way",
+                    city: "Technology",
+                    state: "Wyoming",
+                    country: "United States",
+                    lat: 42.307276,
+                    lng: -108.652775,
+                    name: "The Den",
+                    description: "A place to get things done.",
+                    price: 102,
+                },
             ],
             { validate: true }
         );
@@ -67,7 +79,12 @@ module.exports = {
             options,
             {
                 name: {
-                    [Op.in]: ["Cozy Home", "Other Place", "This One"],
+                    [Op.in]: [
+                        "Cozy Home",
+                        "Other Place",
+                        "This One",
+                        "The Den",
+                    ],
                 },
             },
             {}
