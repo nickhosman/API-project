@@ -220,6 +220,8 @@ router.get("/", validateQueries, async (req, res) => {
 
         if (previewImage) {
             spot.dataValues.previewImage = previewImage.url;
+        } else {
+            spot.dataValues.previewImage = "No preview image found";
         }
     }
 
@@ -252,6 +254,8 @@ router.get("/current", requireAuth, async (req, res, next) => {
 
         if (previewImage) {
             spot.dataValues.previewImage = previewImage.url;
+        } else {
+            spot.dataValues.previewImage = "No preview image found";
         }
 
         Spots.push(spot.dataValues);

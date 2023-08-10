@@ -22,9 +22,9 @@ router.delete("/:imageId", requireAuth, async (req, res, next) => {
         }
     }
 
-    const err = new Error("Spot couldn't be found");
-    err.title = "Spot couldn't be found";
-    err.errors = { message: "Spot couldn't be found" };
+    const err = new Error("Review image couldn't be found");
+    err.title = "Review image couldn't be found";
+    err.errors = { message: "Review image couldn't be found" };
     err.status = 404;
     return next(err);
 });
