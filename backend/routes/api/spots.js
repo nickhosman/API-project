@@ -291,9 +291,10 @@ router.get("/:spotId/reviews", async (req, res, next) => {
             { model: ReviewImage, attributes: ["id", "url"] },
         ],
     });
-    console.log(Reviews);
 
-    if (!Reviews.length) {
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    if (!spot) {
         const err = new Error("Spot couldn't be found");
         err.title = "Spot couldn't be found";
         err.errors = { message: "Spot couldn't be found" };
@@ -338,8 +339,8 @@ router.post("/:spotId/reviews", validateReview, async (req, res, next) => {
         const { review, stars } = req.body;
 
         const newReview = await Review.create({
-            spotId: req.params.spotId,
             userId: req.user.id,
+            spotId: parseInt(req.params.spotId),
             review,
             stars,
         });
@@ -447,13 +448,13 @@ router.post("/:spotId/bookings", validateBooking, async (req, res, next) => {
                     err.status = 403;
                     return next(err);
                 }
-            };
+            }
         }
 
         if (spot.ownerId !== req.user.id) {
             const newBooking = await Booking.create({
-                spotId: req.params.spotId,
                 userId: req.user.id,
+                spotId: parseInt(req.params.spotId),
                 startDate,
                 endDate,
             });
