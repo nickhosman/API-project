@@ -14,6 +14,12 @@ router.delete("/:imageId", requireAuth, async (req, res, next) => {
         if (req.user.id === spot.ownerId) {
             image.destroy();
             return res.json({ message: "Succesfully deleted" });
+        } else {
+            const err = new Error("Forbidden");
+            err.title = "Forbidden";
+            err.errors = { message: "Not authorized to take this action" };
+            err.status = 403;
+            return next(err);
         }
     }
 

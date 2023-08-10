@@ -56,7 +56,7 @@ router.post("/:reviewId/images", requireAuth, async (req, res, next) => {
     });
 
     if (reviewImages.length >= 10) {
-        console.log("reviewImages length:", reviewImages.length);
+        // console.log("reviewImages length:", reviewImages.length);
         const err = new Error(
             "Maximum number of images for this resource was reached"
         );
@@ -84,6 +84,12 @@ router.post("/:reviewId/images", requireAuth, async (req, res, next) => {
             delete data.createdAt;
 
             return res.json(data);
+        } else {
+            const err = new Error("Forbidden");
+            err.title = "Forbidden";
+            err.errors = { message: "Not authorized to take this action" };
+            err.status = 403;
+            return next(err);
         }
     }
 
@@ -122,6 +128,12 @@ router.put("/:reviewId", validateReview, async (req, res, next) => {
             thisReview.save();
 
             return res.json(thisReview);
+        } else {
+            const err = new Error("Forbidden");
+            err.title = "Forbidden";
+            err.errors = { message: "Not authorized to take this action" };
+            err.status = 403;
+            return next(err);
         }
     }
 
@@ -141,6 +153,12 @@ router.delete("/:reviewId", requireAuth, async (req, res, next) => {
             review.destroy();
 
             return res.json({ message: "Successfully deleted" });
+        } else {
+            const err = new Error("Forbidden");
+            err.title = "Forbidden";
+            err.errors = { message: "Not authorized to take this action" };
+            err.status = 403;
+            return next(err);
         }
     }
 

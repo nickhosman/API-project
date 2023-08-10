@@ -1,9 +1,5 @@
 const express = require("express");
-const {
-    setTokenCookie,
-    requireAuth,
-    restoreUser,
-} = require("../../utils/auth");
+const { requireAuth } = require("../../utils/auth");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 
@@ -213,6 +209,12 @@ router.post("/:spotId/images", requireAuth, async (req, res, next) => {
                 url: newSpotImage.url,
                 preview: newSpotImage.preview,
             });
+        } else {
+            const err = new Error("Forbidden");
+            err.title = "Forbidden";
+            err.errors = { message: "Not authorized to take this action" };
+            err.status = 403;
+            return next(err);
         }
     }
 
@@ -254,6 +256,12 @@ router.put("/:spotId", validateSpot, async (req, res, next) => {
             await spot.save();
 
             res.json(spot);
+        } else {
+            const err = new Error("Forbidden");
+            err.title = "Forbidden";
+            err.errors = { message: "Not authorized to take this action" };
+            err.status = 403;
+            return next(err);
         }
     }
 
@@ -272,6 +280,12 @@ router.delete("/:spotId", requireAuth, async (req, res, next) => {
         if (spot.ownerId === req.user.id) {
             await spot.destroy();
             return res.json({ message: "Succesfully deleted" });
+        } else {
+            const err = new Error("Forbidden");
+            err.title = "Forbidden";
+            err.errors = { message: "Not authorized to take this action" };
+            err.status = 403;
+            return next(err);
         }
     }
 
@@ -460,6 +474,12 @@ router.post("/:spotId/bookings", validateBooking, async (req, res, next) => {
             });
 
             return res.json(newBooking);
+        } else {
+            const err = new Error("Forbidden");
+            err.title = "Forbidden";
+            err.errors = { message: "Not authorized to take this action" };
+            err.status = 403;
+            return next(err);
         }
     }
 
