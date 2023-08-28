@@ -16,12 +16,19 @@ export const getSpots = () => async (dispatch) => {
     const spots = await response.json();
     dispatch(loadSpots(spots));
   }
+
+  return response;
 };
 
-const spotReducer = (state = {}, action) => {
+const initialState = { allSpots: { Spots: []}};
+
+const spotReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_SPOTS:
-      return;
+      return {
+        ...state,
+        allSpots: action.payload,
+      };
     default:
       return state;
   }

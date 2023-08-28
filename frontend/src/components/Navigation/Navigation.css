@@ -29,13 +29,14 @@ li {
   justify-content: center;
   gap: 1rem;
   position: absolute;
-  z-index: -1;
+  /* z-index: -1; */
+  background-color: white;
   right: 5rem;
   top: 3rem;
   /* border: 1px solid black; */
   border-radius: 15px;
   padding: 1rem;
-  box-shadow: 0px 8px 9px lightgray;
+  box-shadow: 0px 8px 9px gray;
   width: 15rem;
 }
 

@@ -210,7 +210,7 @@ router.get("/", validateQueries, async (req, res) => {
             return total;
         }, 0);
 
-        const avgRating = starTotal / reviewCount;
+        const avgRating = Number.parseFloat(starTotal / reviewCount).toFixed(2);
         spot.dataValues.avgRating = avgRating;
 
         // Add previewImage url to object
