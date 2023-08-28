@@ -8,8 +8,9 @@
 
 .spot-image {
   border-radius: 15px;
-  width: 25rem;
-  height: 25rem;
+  width: 100%;
+  max-height: 25rem;
+  object-fit: cover;
 }
 
 .info-wrapper {

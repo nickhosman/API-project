@@ -7,7 +7,7 @@ export default function SpotDetails() {
   const { spotId } = useParams();
   const dispatch = useDispatch();
   const spot = useSelector((state) => state.spots.singleSpot);
-  console.log(spot);
+  // console.log(spot);
 
   useEffect(() => {
     dispatch(spotActions.getSpotDetails(spotId));
@@ -30,7 +30,7 @@ export default function SpotDetails() {
         {spot.state}, {spot.country}
         <div className="img-wrapper">
           {spot.SpotImages ? spot.SpotImages.map((image) => {
-            return <img key={image.id} src={image.url} />;
+            return <img alt="" key={image.id} src={image.url} />;
           }) : null}
         </div>
         <div className="spot-info">

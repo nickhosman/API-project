@@ -14,6 +14,7 @@ export default function SpotCard({ spotInfo }) {
     <div className="spot-card" title={spotInfo.name} onClick={handleClick}>
       <img
         className="spot-image"
+        alt="preview"
         src={
           spotInfo.previewImage !== "No preview image found"
             ? spotInfo.previewImage
@@ -26,7 +27,7 @@ export default function SpotCard({ spotInfo }) {
         </h3>
         <span className="location-rating">
           <i className="fa-solid fa-star fa-xs"></i>
-          {spotInfo.avgRating !== NaN ? spotInfo.avgRating : "New"}
+          {!isNaN(spotInfo.avgRating) ? spotInfo.avgRating : "New"}
         </span>
       </div>
       <span className="price">
