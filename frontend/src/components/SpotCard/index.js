@@ -1,11 +1,17 @@
 import React from "react";
 import "./SpotCard.css";
+import { useHistory } from "react-router-dom";
 
 export default function SpotCard({ spotInfo }) {
   // console.log("spotInfo:", spotInfo);
+  const history = useHistory();
+
+  const handleClick = () => {
+    history.push(`/spots/${spotInfo.id}`);
+  };
 
   return (
-    <div className="spot-card" title={spotInfo.name}>
+    <div className="spot-card" title={spotInfo.name} onClick={handleClick}>
       <img
         className="spot-image"
         src={
@@ -20,7 +26,7 @@ export default function SpotCard({ spotInfo }) {
         </h3>
         <span className="location-rating">
           <i className="fa-solid fa-star fa-xs"></i>
-          {spotInfo.avgRating}
+          {spotInfo.avgRating !== NaN ? spotInfo.avgRating : "New"}
         </span>
       </div>
       <span className="price">

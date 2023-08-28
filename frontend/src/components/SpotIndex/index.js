@@ -11,6 +11,7 @@ export default function SpotIndex() {
 
   useEffect(() => {
     dispatch(spotActions.getSpots());
+    dispatch(spotActions.resetSpot());
   }, [dispatch]);
 
   if (!spots) return null;
