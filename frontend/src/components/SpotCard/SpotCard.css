@@ -1,0 +1,31 @@
+.spot-card {
+  width: 25rem;
+}
+
+.spot-card:hover {
+  cursor: pointer;
+}
+
+.spot-image {
+  border-radius: 15px;
+  width: 100%;
+  max-height: 25rem;
+  object-fit: cover;
+}
+
+.info-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.location-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
