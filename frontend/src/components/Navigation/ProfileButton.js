@@ -42,6 +42,7 @@ function ProfileButton({ user }) {
 
   return (
     <>
+      {user ? <button className="create-spot-btn">Create a Spot</button> : null}
       <button onClick={openMenu} className={btnClassName}>
         <i className="fa-solid fa-bars fa-xl"></i>
         <i className="fa-solid fa-circle-user fa-xl"></i>
