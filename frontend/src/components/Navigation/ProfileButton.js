@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
+import { NavLink } from "react-router-dom";
+
 import * as sessionActions from "../../store/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
@@ -42,7 +44,11 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      {user ? <button className="create-spot-btn">Create a Spot</button> : null}
+      {user ? (
+        <NavLink className="create-spot-btn" to="/spots/new">
+          Create a Spot
+        </NavLink>
+      ) : null}
       <button onClick={openMenu} className={btnClassName}>
         <i className="fa-solid fa-bars fa-xl"></i>
         <i className="fa-solid fa-circle-user fa-xl"></i>
@@ -55,6 +61,9 @@ function ProfileButton({ user }) {
             </li>
             <li>{user.username}</li>
             <li>{user.email}</li>
+            <li>
+              <NavLink to="/spots/manage">Manage Spots</NavLink>
+            </li>
             <li>
               <button onClick={logout}>Log Out</button>
             </li>
