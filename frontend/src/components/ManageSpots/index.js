@@ -19,12 +19,15 @@ export default function ManageSpots() {
   return (
     <>
       <h1>Manage Spots</h1>
-      {spots.length > 0 ? <div className="spot-card-wrapper">
-      {spots.map((spot) => {
-        return <SpotCard key={spot.id} spotInfo={spot} manage={true} />;
-      })}
-    </div> : <NavLink to="/spots/new">Create a New Spot</NavLink>}
-
+      {spots.length > 0 ? (
+        <div className="spot-card-wrapper">
+          {spots.map((spot) => {
+            return <SpotCard key={spot.id} spotInfo={spot} manage={true} />;
+          })}
+        </div>
+      ) : (
+        <NavLink to="/spots/new">Create a New Spot</NavLink>
+      )}
     </>
   );
 }

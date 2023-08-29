@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 import * as spotActions from "../../store/spots";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { csrfFetch } from "../../store/csrf";
 
 export default function CreateSpotForm() {
   const dispatch = useDispatch();
@@ -14,7 +15,11 @@ export default function CreateSpotForm() {
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
-  const [previewImage, setPreviewImage] = useState("");
+  const [previewImageURL, setPreviewImageURL] = useState("");
+  const [otherImage1, setOtherImage1] = useState("");
+  const [otherImage2, setOtherImage2] = useState("");
+  const [otherImage3, setOtherImage3] = useState("");
+  const [otherImage4, setOtherImage4] = useState("");
   const [errors, setErrors] = useState({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
@@ -56,7 +61,46 @@ export default function CreateSpotForm() {
       }
     });
 
-    if (data.id) history.push(`/spots/${data.id}`);
+    if (data.id) {
+      const previewBody = JSON.stringify({
+        url: previewImageURL,
+        preview: true,
+      });
+      csrfFetch(`/api/spots/${data.id}/images`, {
+        method: "POST",
+        body: previewBody,
+      });
+
+      if (otherImage1) {
+        csrfFetch(`/api/spots/${data.id}/images`, {
+          method: "POST",
+          body: JSON.stringify({ url: otherImage1, preview: false }),
+        });
+      }
+
+      if (otherImage2) {
+        csrfFetch(`/api/spots/${data.id}/images`, {
+          method: "POST",
+          body: JSON.stringify({ url: otherImage2, preview: false }),
+        });
+      }
+
+      if (otherImage3) {
+        csrfFetch(`/api/spots/${data.id}/images`, {
+          method: "POST",
+          body: JSON.stringify({ url: otherImage3, preview: false }),
+        });
+      }
+
+      if (otherImage4) {
+        csrfFetch(`/api/spots/${data.id}/images`, {
+          method: "POST",
+          body: JSON.stringify({ url: otherImage4, preview: false }),
+        });
+      }
+
+      history.push(`/spots/${data.id}`);
+    }
   };
 
   return (
@@ -162,13 +206,33 @@ export default function CreateSpotForm() {
               type="url"
               placeholder="Preview Image URL"
               required
-              value={previewImage}
-              onChange={(e) => setPreviewImage(e.target.value)}
+              value={previewImageURL}
+              onChange={(e) => setPreviewImageURL(e.target.value)}
             />
-            <input type="url" placeholder="Image URL" />
-            <input type="url" placeholder="Image URL" />
-            <input type="url" placeholder="Image URL" />
-            <input type="url" placeholder="Image URL" />
+            <input
+              type="url"
+              placeholder="Image URL"
+              value={otherImage1}
+              onChange={(e) => setOtherImage1(e.target.value)}
+            />
+            <input
+              type="url"
+              placeholder="Image URL"
+              value={otherImage2}
+              onChange={(e) => setOtherImage2(e.target.value)}
+            />
+            <input
+              type="url"
+              placeholder="Image URL"
+              value={otherImage3}
+              onChange={(e) => setOtherImage3(e.target.value)}
+            />
+            <input
+              type="url"
+              placeholder="Image URL"
+              value={otherImage4}
+              onChange={(e) => setOtherImage4(e.target.value)}
+            />
           </label>
         </section>
         <button>Create Spot</button>
