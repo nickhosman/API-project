@@ -30,7 +30,9 @@ export default function SpotCard({ spotInfo, manage }) {
             </h3>
             <span className="location-rating">
               <i className="fa-solid fa-star fa-xs"></i>
-              {isNaN(spotInfo.avgRating) || spotInfo.avgRating === null ? "New" : spotInfo.avgRating }
+              {isNaN(spotInfo.avgRating) || spotInfo.avgRating === null
+                ? "New"
+                : parseFloat(spotInfo.avgRating).toFixed(2)}
             </span>
           </div>
           <span className="price">
