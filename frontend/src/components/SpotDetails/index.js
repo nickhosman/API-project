@@ -28,7 +28,7 @@ export default function SpotDetails() {
         <i className="fa-solid fa-star fa-xs"></i>
         {isNaN(avgRating) ? "New" : avgRating}{" "}
         {parseInt(spot.numReviews) > 1 ? " ‧ " + spot.numReviews + " reviews " : parseInt(spot.numReviews) === 1 ? " ‧ 1 review " : ""}
-        {" ‧ "}{spot.state}, {spot.country}
+        {" ‧ "}{spot.city}, {spot.state}, {spot.country}
         <div className="img-wrapper">
           {spot.SpotImages
             ? spot.SpotImages.map((image) => {
