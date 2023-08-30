@@ -322,18 +322,18 @@ const validateSpot = [
     check("country")
         .exists({ checkFalsy: true })
         .withMessage("Country is required"),
-    check("lat")
-        .exists({ checkFalsy: true })
-        .custom((value) => {
-            return parseInt(value) < 90 && parseInt(value) > -90;
-        })
-        .withMessage("Latitude is not valid"),
-    check("lng")
-        .exists({ checkFalsy: true })
-        .custom((value) => {
-            return parseInt(value) < 180 && parseInt(value) > -180;
-        })
-        .withMessage("Longitude is not valid"),
+    // check("lat")
+    //     .exists({ checkFalsy: true })
+    //     .custom((value) => {
+    //         return parseInt(value) < 90 && parseInt(value) > -90;
+    //     })
+    //     .withMessage("Latitude is not valid"),
+    // check("lng")
+    //     .exists({ checkFalsy: true })
+    //     .custom((value) => {
+    //         return parseInt(value) < 180 && parseInt(value) > -180;
+    //     })
+    //     .withMessage("Longitude is not valid"),
     check("name")
         .exists({ checkFalsy: true })
         .isLength({ max: 50 })
@@ -354,8 +354,8 @@ router.post("/", validateSpot, async (req, res, next) => {
         city,
         state,
         country,
-        lat,
-        lng,
+        // lat,
+        // lng,
         name,
         description,
         price,
@@ -367,8 +367,8 @@ router.post("/", validateSpot, async (req, res, next) => {
         city,
         state,
         country,
-        lat,
-        lng,
+        // lat,
+        // lng,
         name,
         description,
         price,

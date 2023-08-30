@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
+import { NavLink } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+
 import * as sessionActions from "../../store/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
@@ -7,6 +10,7 @@ import SignupFormModal from "../SignupFormModal";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
@@ -35,6 +39,7 @@ function ProfileButton({ user }) {
     e.preventDefault();
     dispatch(sessionActions.logout());
     closeMenu();
+    history.push("/");
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -42,7 +47,11 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      {user ? <button className="create-spot-btn">Create a Spot</button> : null}
+      {user ? (
+        <NavLink className="create-spot-btn" to="/spots/new">
+          Create a Spot
+        </NavLink>
+      ) : null}
       <button onClick={openMenu} className={btnClassName}>
         <i className="fa-solid fa-bars fa-xl"></i>
         <i className="fa-solid fa-circle-user fa-xl"></i>
@@ -55,6 +64,11 @@ function ProfileButton({ user }) {
             </li>
             <li>{user.username}</li>
             <li>{user.email}</li>
+            <li>
+              <NavLink to="/spots/manage" onClick={closeMenu}>
+                Manage Spots
+              </NavLink>
+            </li>
             <li>
               <button onClick={logout}>Log Out</button>
             </li>
