@@ -26,7 +26,7 @@ export default function ManageSpots() {
           })}
         </div>
       ) : (
-        <NavLink to="/spots/new">Create a New Spot</NavLink>
+        <NavLink to="/spots/new"><button>Create a New Spot</button></NavLink>
       )}
     </>
   );

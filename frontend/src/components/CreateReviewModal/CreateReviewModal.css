@@ -1,0 +1,22 @@
+.create-review-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  height: 50rem;
+  width: 30rem;
+}
+
+.create-review-wrapper h1 {
+  padding: 0px;
+  margin-bottom: 0px;
+}
+
+.star-container {
+  display: flex;
+}
+
+.star {
+  cursor: pointer;
+}

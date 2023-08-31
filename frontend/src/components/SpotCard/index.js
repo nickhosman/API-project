@@ -3,13 +3,18 @@ import "./SpotCard.css";
 import { NavLink } from "react-router-dom";
 import OpenModalButton from "../OpenModalButton";
 import ModalSpotDelete from "../ManageSpots/ModalSpotDelete";
+import { useSpotContext } from "../../context/Spot";
+import { useHistory } from "react-router-dom";
 
 export default function SpotCard({ spotInfo, manage }) {
+  const history = useHistory();
+  const { setSpot } = useSpotContext();
   // console.log("spotInfo:", spotInfo);
 
-  // const handleClick = () => {
-  //   history.push(`/spots/${spotInfo.id}`);
-  // };
+  const handleUpdateClick = () => {
+    setSpot(spotInfo);
+    history.push(`/spots/${spotInfo.id}/edit`);
+  };
 
   return (
     <>
@@ -41,7 +46,7 @@ export default function SpotCard({ spotInfo, manage }) {
         </NavLink>
         {manage === true ? (
           <span>
-            <OpenModalButton buttonText="Update" />
+            <button onClick={handleUpdateClick}>Update</button>
             <OpenModalButton
               modalComponent={<ModalSpotDelete spotId={spotInfo.id} />}
               buttonText="Delete"

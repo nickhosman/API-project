@@ -4,17 +4,19 @@ import * as spotActions from "../../store/spots";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { csrfFetch } from "../../store/csrf";
+import { useSpotContext } from "../../context/Spot";
 
-export default function CreateSpotForm() {
+export default function CreateSpotForm({ edit }) {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { spot } = useSpotContext();
   const [country, setCountry] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState("");
   const [previewImageURL, setPreviewImageURL] = useState("");
   const [otherImage1, setOtherImage1] = useState("");
   const [otherImage2, setOtherImage2] = useState("");
@@ -32,6 +34,28 @@ export default function CreateSpotForm() {
     setErrors(valErrors);
   }, [description]);
 
+  useEffect(() => {
+    if (edit && Object.keys(spot).length > 0) {
+      setCountry(spot.country);
+      setAddress(spot.address);
+      setCity(spot.city);
+      setState(spot.state);
+      setDescription(spot.description);
+      setName(spot.name);
+      setPrice(spot.price);
+    }
+  }, [
+    setCountry,
+    setAddress,
+    setCity,
+    setState,
+    setDescription,
+    setName,
+    setPrice,
+    spot,
+    edit,
+  ]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -39,7 +63,7 @@ export default function CreateSpotForm() {
 
     if (Object.keys(errors).length > 0) return null;
 
-    const spot = {
+    const newSpot = {
       address,
       city,
       state,
@@ -50,62 +74,62 @@ export default function CreateSpotForm() {
     };
 
     // console.log("spot:", spot);
-    const data = await dispatch(
-      spotActions.createSpot(JSON.stringify(spot))
-    ).catch(async (res) => {
-      const data = await res.json();
-      if (data && data.errors) {
-        // console.log("data:", data);
-        setErrors(data.errors);
-        return null;
-      }
-    });
-
-    if (data.id) {
-      const previewBody = JSON.stringify({
-        url: previewImageURL,
-        preview: true,
-      });
-      csrfFetch(`/api/spots/${data.id}/images`, {
-        method: "POST",
-        body: previewBody,
+    if (!edit) {
+      const data = await dispatch(
+        spotActions.createSpot(JSON.stringify(newSpot))
+      ).catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) {
+          // console.log("data:", data);
+          setErrors(data.errors);
+          return null;
+        }
       });
 
-      if (otherImage1) {
+      if (data.id) {
+        const previewBody = JSON.stringify({
+          url: previewImageURL,
+          preview: true,
+        });
         csrfFetch(`/api/spots/${data.id}/images`, {
           method: "POST",
-          body: JSON.stringify({ url: otherImage1, preview: false }),
+          body: previewBody,
         });
-      }
 
-      if (otherImage2) {
-        csrfFetch(`/api/spots/${data.id}/images`, {
-          method: "POST",
-          body: JSON.stringify({ url: otherImage2, preview: false }),
-        });
-      }
+        const imgArray = [otherImage1, otherImage2, otherImage3, otherImage4];
+        let promiseArr = [];
 
-      if (otherImage3) {
-        csrfFetch(`/api/spots/${data.id}/images`, {
-          method: "POST",
-          body: JSON.stringify({ url: otherImage3, preview: false }),
-        });
-      }
+        let imgBody;
+        for (let img of imgArray) {
+          // console.log("img url:", img);
+          if (img.length > 0) {
+            imgBody = JSON.stringify({
+              url: img,
+              preview: false,
+            });
+            promiseArr.push(
+              csrfFetch(`/api/spots/${data.id}/images`, {
+                method: "POST",
+                body: imgBody,
+              })
+            );
+          }
+        }
 
-      if (otherImage4) {
-        csrfFetch(`/api/spots/${data.id}/images`, {
-          method: "POST",
-          body: JSON.stringify({ url: otherImage4, preview: false }),
-        });
+        Promise.all(promiseArr);
       }
-
-      history.push(`/spots/${data.id}`);
+    } else {
+      csrfFetch(`/api/spots/${spot.id}`, {
+        method: "PUT",
+        body: JSON.stringify(newSpot),
+      });
     }
+    history.push(`/spots/${spot.id}`);
   };
 
   return (
     <>
-      <h1>Create a New Spot</h1>
+      <h1>{edit ? "Update your Spot" : "Create a New Spot"}</h1>
       <form onSubmit={handleSubmit}>
         <section className="location-wrapper">
           <h2>Where's your place located?</h2>
@@ -165,6 +189,7 @@ export default function CreateSpotForm() {
             placeholder="Please write at least 30 characters"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            required
           ></textarea>
           {errors.description && hasSubmitted ? (
             <p className="errors">{errors.description}</p>
@@ -198,44 +223,46 @@ export default function CreateSpotForm() {
             />
           </label>
         </section>
-        <section>
-          <h2>Liven up your spot with photos</h2>
-          <p>Submit a link to at least one photo to publish your spot.</p>
-          <label>
-            <input
-              type="url"
-              placeholder="Preview Image URL"
-              required
-              value={previewImageURL}
-              onChange={(e) => setPreviewImageURL(e.target.value)}
-            />
-            <input
-              type="url"
-              placeholder="Image URL"
-              value={otherImage1}
-              onChange={(e) => setOtherImage1(e.target.value)}
-            />
-            <input
-              type="url"
-              placeholder="Image URL"
-              value={otherImage2}
-              onChange={(e) => setOtherImage2(e.target.value)}
-            />
-            <input
-              type="url"
-              placeholder="Image URL"
-              value={otherImage3}
-              onChange={(e) => setOtherImage3(e.target.value)}
-            />
-            <input
-              type="url"
-              placeholder="Image URL"
-              value={otherImage4}
-              onChange={(e) => setOtherImage4(e.target.value)}
-            />
-          </label>
-        </section>
-        <button>Create Spot</button>
+        {edit ? null : (
+          <section>
+            <h2>Liven up your spot with photos</h2>
+            <p>Submit a link to at least one photo to publish your spot.</p>
+            <label>
+              <input
+                type="url"
+                placeholder="Preview Image URL"
+                required
+                value={previewImageURL}
+                onChange={(e) => setPreviewImageURL(e.target.value)}
+              />
+              <input
+                type="url"
+                placeholder="Image URL"
+                value={otherImage1}
+                onChange={(e) => setOtherImage1(e.target.value)}
+              />
+              <input
+                type="url"
+                placeholder="Image URL"
+                value={otherImage2}
+                onChange={(e) => setOtherImage2(e.target.value)}
+              />
+              <input
+                type="url"
+                placeholder="Image URL"
+                value={otherImage3}
+                onChange={(e) => setOtherImage3(e.target.value)}
+              />
+              <input
+                type="url"
+                placeholder="Image URL"
+                value={otherImage4}
+                onChange={(e) => setOtherImage4(e.target.value)}
+              />
+            </label>
+          </section>
+        )}
+        <button>{edit ? "Update your Spot" : "Create Spot"}</button>
       </form>
     </>
   );
