@@ -95,7 +95,7 @@ export default function SpotDetails() {
         ) : null}
         {Object.values(reviews).length > 0
           ? Object.values(reviews).map((review) => {
-              return <ReviewTile review={review} userId={userId} />;
+              return <ReviewTile review={review} userId={userId} key={review.id} />;
             })
           : userId === spot.ownerId
           ? "No reviews yet."
