@@ -32,6 +32,17 @@ export default function SpotDetails() {
     alert("Feature coming soon");
   };
 
+  const compareById = (a, b) => {
+    return b.id - a.id;
+  };
+
+  const orderReviews = (reviews) => {
+    let reviewArr = Object.values(reviews);
+    // console.log("reviewArr:", reviewArr);
+
+    return reviewArr.sort(compareById);
+  };
+
   const avgRating = Number.parseFloat(spot.avgStarRating).toFixed(2);
 
   return (
@@ -83,15 +94,19 @@ export default function SpotDetails() {
               : ""}
           </h3>
         </div>
-        {spot.ownerId !== user.id && !reviewAuthors.includes(user.id) && user ? (
+        {spot.ownerId !== user.id &&
+        !reviewAuthors.includes(user.id) &&
+        user ? (
           <OpenModalButton
             modalComponent={<CreateReviewModal spotId={spotId} user={user} />}
             buttonText="Post Your Review"
           />
         ) : null}
         {Object.values(reviews).length > 0
-          ? Object.values(reviews).map((review) => {
-              return <ReviewTile review={review} userId={user.id} key={review.id} />;
+          ? orderReviews(reviews).map((review) => {
+              return (
+                <ReviewTile review={review} userId={user.id} key={review.id} />
+              );
             })
           : user.id === spot.ownerId
           ? "No reviews yet."

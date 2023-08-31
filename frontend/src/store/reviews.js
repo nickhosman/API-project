@@ -68,7 +68,7 @@ export const createReview = (review, spotId, user) => async (dispatch) => {
       lastName: user.lastName,
       id: user.id,
     };
-    console.log(review);
+    // console.log(review);
 
     dispatch(addReview(review));
 
