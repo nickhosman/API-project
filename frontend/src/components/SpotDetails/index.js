@@ -23,7 +23,7 @@ export default function SpotDetails() {
   useEffect(() => {
     dispatch(spotActions.getSpotDetails(spotId));
     dispatch(reviewActions.getSpotReviews(spotId));
-  }, [dispatch, spotId]);
+  }, [dispatch, spotId, reviews]);
 
   if (!reviews) return null;
   if (!spot.id) return null;
