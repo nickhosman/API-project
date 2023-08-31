@@ -14,16 +14,12 @@ export default function SpotDetails() {
   const spot = useSelector((state) => state.spots.singleSpot);
   const reviews = useSelector((state) => state.reviews.spot);
   const user = useSelector((state) => state.session.user);
-  let userId;
-  if (user) {
-    userId = user.id;
-  }
   // console.log(spot);
 
   useEffect(() => {
     dispatch(spotActions.getSpotDetails(spotId));
     dispatch(reviewActions.getSpotReviews(spotId));
-  }, [dispatch, spotId, reviews]);
+  }, [dispatch, spotId]);
 
   if (!reviews) return null;
   if (!spot.id) return null;
@@ -87,17 +83,17 @@ export default function SpotDetails() {
               : ""}
           </h3>
         </div>
-        {spot.ownerId !== userId && !reviewAuthors.includes(userId) && user ? (
+        {spot.ownerId !== user.id && !reviewAuthors.includes(user.id) && user ? (
           <OpenModalButton
-            modalComponent={<CreateReviewModal spotId={spotId} />}
+            modalComponent={<CreateReviewModal spotId={spotId} user={user} />}
             buttonText="Post Your Review"
           />
         ) : null}
         {Object.values(reviews).length > 0
           ? Object.values(reviews).map((review) => {
-              return <ReviewTile review={review} userId={userId} key={review.id} />;
+              return <ReviewTile review={review} userId={user.id} key={review.id} />;
             })
-          : userId === spot.ownerId
+          : user.id === spot.ownerId
           ? "No reviews yet."
           : "Be the first to post a review!"}
       </section>

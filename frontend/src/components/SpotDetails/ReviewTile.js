@@ -4,6 +4,9 @@ import OpenModalButton from "../OpenModalButton";
 import ReviewDeleteModal from "../ReviewDeleteModal";
 
 export default function ReviewTile({ review, userId }) {
+  console.log("review:", review);
+
+
   const getMonthYear = (date) => {
     const months = [
       "January",

@@ -5,7 +5,7 @@ import * as reviewActions from "../../store/reviews";
 import { useDispatch } from "react-redux";
 import "./CreateReviewModal.css";
 
-export default function CreateReviewModal({spotId}) {
+export default function CreateReviewModal({spotId, user}) {
   const dispatch = useDispatch();
   const [rating, setRating] = useState(0);
   const [activeRating, setActiveRating] = useState(rating);
@@ -26,7 +26,7 @@ export default function CreateReviewModal({spotId}) {
       stars: rating,
     };
 
-    dispatch(reviewActions.createReview(JSON.stringify(reviewBody), spotId));
+    dispatch(reviewActions.createReview(JSON.stringify(reviewBody), spotId, user));
 
     closeModal();
   };

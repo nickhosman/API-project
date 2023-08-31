@@ -117,14 +117,17 @@ export default function CreateSpotForm({ edit }) {
         }
 
         Promise.all(promiseArr);
+
+        history.push(`/spots/${data.id}`)
       }
     } else {
       csrfFetch(`/api/spots/${spot.id}`, {
         method: "PUT",
         body: JSON.stringify(newSpot),
       });
+
+      history.push(`/spots/${spot.id}`);
     }
-    history.push(`/spots/${spot.id}`);
   };
 
   return (
