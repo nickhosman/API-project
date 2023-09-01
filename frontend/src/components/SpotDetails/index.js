@@ -74,10 +74,18 @@ export default function SpotDetails() {
                   );
                 })
               : null}
-            {spot.SpotImages.length < 2 ? <div className="spot-image-2"></div> : null}
-            {spot.SpotImages.length < 3 ? <div className="spot-image-3"></div> : null}
-            {spot.SpotImages.length < 4 ? <div className="spot-image-4"></div> : null}
-            {spot.SpotImages.length < 5 ? <div className="spot-image-5"></div> : null}
+            {spot.SpotImages.length < 2 ? (
+              <div className="spot-image-2"></div>
+            ) : null}
+            {spot.SpotImages.length < 3 ? (
+              <div className="spot-image-3"></div>
+            ) : null}
+            {spot.SpotImages.length < 4 ? (
+              <div className="spot-image-4"></div>
+            ) : null}
+            {spot.SpotImages.length < 5 ? (
+              <div className="spot-image-5"></div>
+            ) : null}
           </div>
           <div className="spot-info">
             <h2>
