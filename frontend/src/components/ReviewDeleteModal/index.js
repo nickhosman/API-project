@@ -2,17 +2,20 @@ import React from "react";
 
 import { useModal } from "../../context/Modal";
 import * as reviewActions from "../../store/reviews";
+import * as spotActions from "../../store/spots";
 import { useDispatch } from "react-redux";
 
 export default function ReviewDeleteModal({ review }) {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
 
-  const confirmDelete = (reviewId) => {
-    dispatch(reviewActions.deleteReview(reviewId)).catch(async (res) => {
+  const confirmDelete = (review) => {
+    dispatch(reviewActions.deleteReview(review.id)).catch(async (res) => {
       const data = await res.json();
       console.log("removeReview errors:", data);
     });
+
+    dispatch(spotActions.getSpotDetails(review.spotId));
 
     closeModal();
   };
@@ -25,7 +28,7 @@ export default function ReviewDeleteModal({ review }) {
         <button
           className="confirm-delete"
           onClick={() => {
-            confirmDelete(review.id);
+            confirmDelete(review);
           }}
         >
           Yes (Delete Review)

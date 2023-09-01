@@ -1,6 +1,14 @@
+.spot-card-container {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
 .spot-card-wrapper {
   display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
   justify-content: center;
+  width: 100%;
+  padding-left: 2rem;
+  padding-right: 2rem;
 }

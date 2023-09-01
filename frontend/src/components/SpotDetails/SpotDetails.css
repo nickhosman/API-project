@@ -1,4 +1,48 @@
+.spot-detail-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.spot-detail {
+  max-width: 1000px;
+}
+
 .review-header {
   display: flex;
   align-items: center;
+}
+
+.img-wrapper {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(4, 250px);
+  grid-template-rows: repeat(2, 250px);
+  gap: .5rem;
+}
+
+.img-wrapper > * {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.img-wrapper > div {
+  border: 1px solid lightgrey;
+}
+
+.spot-image-1 {
+  grid-column: span 2;
+  grid-row: span 2;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+.spot-image-3 {
+  border-top-right-radius: 20px;
+}
+
+.spot-image-5 {
+  border-bottom-right-radius: 20px;
 }
