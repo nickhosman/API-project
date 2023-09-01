@@ -1,7 +1,8 @@
-/* * {
+* {
+  box-sizing: border-box;
   padding: 0px;
   margin: 0px;
-} */
+}
 
 .nav-bar {
   list-style-type: none;
@@ -9,12 +10,17 @@
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
-  position: relative;
-  width: 100%;
+  position: sticky;
+  top: 0;
+  width: auto;
+  background-color: white;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .nav-logo {
   height: 3rem;
+  margin-left: 3rem;
 }
 
 a {
@@ -22,8 +28,9 @@ a {
   color: black;
 }
 
-li {
+.nav-bar li {
   display: flex;
+  align-items: center;
   gap: 2rem;
 }
 
@@ -36,8 +43,8 @@ li {
   position: absolute;
   /* z-index: -1; */
   background-color: white;
-  right: 5rem;
-  top: 3rem;
+  right: 3rem;
+  top: 4rem;
   /* border: 1px solid black; */
   border-radius: 15px;
   padding: 1rem;
@@ -59,7 +66,7 @@ li {
   border-radius: 50px;
   background-color: white;
   border: 1px solid lightgray;
-  margin-right: 5rem;
+  margin-right: 3rem;
 }
 
 .profile-button:hover {

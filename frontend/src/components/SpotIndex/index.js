@@ -18,10 +18,12 @@ export default function SpotIndex() {
 
   return (
     <div className="spot-card-wrapper">
-      {spots.map((spot) => {
-        // console.log("spot:", spot);
-        return <SpotCard key={spot.id} spotInfo={spot} />;
-      })}
+      <div className="spot-card-container">
+        {spots.map((spot) => {
+          // console.log("spot:", spot);
+          return <SpotCard key={spot.id} spotInfo={spot} />;
+        })}
+      </div>
     </div>
   );
 }
