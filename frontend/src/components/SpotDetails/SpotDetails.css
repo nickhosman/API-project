@@ -29,7 +29,8 @@
 }
 
 .img-wrapper > div {
-  border: 1px solid lightgrey;
+  /* border: 1px solid lightgrey; */
+  background-color: lightgray;
 }
 
 .spot-image-1 {

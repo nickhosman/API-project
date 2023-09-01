@@ -30,6 +30,7 @@ export default function CreateReviewModal({ spotId, user }) {
     dispatch(
       reviewActions.createReview(JSON.stringify(reviewBody), spotId, user)
     );
+    
     dispatch(spotActions.getSpotDetails(spotId));
 
     closeModal();
