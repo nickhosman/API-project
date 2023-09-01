@@ -3,6 +3,7 @@
   gap: 1.5rem;
   flex-wrap: wrap;
   justify-content: flex-start;
+  max-width: 104.5rem;
 }
 
 .spot-card-wrapper {
