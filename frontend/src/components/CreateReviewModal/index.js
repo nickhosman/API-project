@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import { useModal } from "../../context/Modal";
 import * as reviewActions from "../../store/reviews";
-import * as spotActions from "../../store/spots";
 import { useDispatch } from "react-redux";
 import "./CreateReviewModal.css";
 
@@ -30,8 +29,6 @@ export default function CreateReviewModal({ spotId, user }) {
     dispatch(
       reviewActions.createReview(JSON.stringify(reviewBody), spotId, user)
     );
-    
-    dispatch(spotActions.getSpotDetails(spotId));
 
     closeModal();
   };

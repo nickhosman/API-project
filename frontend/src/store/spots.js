@@ -5,11 +5,18 @@ const GET_SPOT = "spots/getSpot";
 const RESET_SPOT = "spots/resetSpot";
 const ADD_SPOT = "spots/addSpot";
 const DELETE_SPOT = "spots/deleteSpot";
+const CLEAR_SPOTS = "spots/clearSpots";
 
 const loadSpots = (spots) => {
   return {
     type: LOAD_SPOTS,
     payload: spots,
+  };
+};
+
+export const clearSpots = () => {
+  return {
+    type: CLEAR_SPOTS,
   };
 };
 
@@ -143,6 +150,11 @@ const spotReducer = (state = initialState, action) => {
       return {
         ...state,
         allSpots: { ...state.allSpots, Spots: newSpots },
+      };
+    case CLEAR_SPOTS:
+      return {
+        ...state,
+        allSpots: { Spots: [] },
       };
     default:
       return state;

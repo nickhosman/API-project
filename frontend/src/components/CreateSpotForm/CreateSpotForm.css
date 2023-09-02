@@ -1,0 +1,17 @@
+.create-spot-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.create-spot-wrapper > form {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+form > section {
+  border-bottom: 1px solid black;
+  padding-bottom: 2rem;
+}

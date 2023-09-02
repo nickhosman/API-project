@@ -9,6 +9,12 @@
   max-width: 1000px;
 }
 
+.spot-detail > section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
 .review-header {
   display: flex;
   align-items: center;
@@ -46,4 +52,50 @@
 
 .spot-image-5 {
   border-bottom-right-radius: 20px;
+}
+
+.spot-details {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid black;
+  padding-bottom: 1rem;
+}
+
+.callout-info {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+.callout-wrapper {
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  border-radius: 15px;
+  gap: 1.5rem;
+}
+
+.spot-price-reviews {
+  display: flex;
+  align-items: flex-end;
+  gap: 1ch;
+}
+
+.reserve-button {
+  height: 2.5rem;
+  background-color: #ff5861;
+  color: white;
+  border: 2px solid black;
+  box-shadow: 2px 2px black;
+}
+
+.reserve-button:hover {
+  cursor: pointer;
+  background-color: #b5474c;
+}
+
+.review-wrapper {
+  max-width: 1000px;
+  width: 100%;
 }

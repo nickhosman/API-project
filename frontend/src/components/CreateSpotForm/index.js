@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { csrfFetch } from "../../store/csrf";
 import { useSpotContext } from "../../context/Spot";
+import "./CreateSpotForm.css";
 
 export default function CreateSpotForm({ edit }) {
   const dispatch = useDispatch();
@@ -131,7 +132,7 @@ export default function CreateSpotForm({ edit }) {
   };
 
   return (
-    <>
+    <div className="create-spot-wrapper">
       <h1>{edit ? "Update your Spot" : "Create a New Spot"}</h1>
       <form onSubmit={handleSubmit}>
         <section className="location-wrapper">
@@ -267,6 +268,6 @@ export default function CreateSpotForm({ edit }) {
         )}
         <button>{edit ? "Update your Spot" : "Create Spot"}</button>
       </form>
-    </>
+    </div>
   );
 }
