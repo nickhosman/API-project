@@ -1,19 +1,53 @@
 .login-modal {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
   align-items: center;
   width: 30rem;
-}
-
-.login-label {
-  display: flex;
-  justify-content: flex-end;
-  width: 80%;
-  gap: 2rem;
+  padding: 2rem;
 }
 
 /* label {
   display: flex;
   justify-content: space-between;
 } */
+
+.demo-login {
+  text-decoration: underline;
+}
+
+.demo-login:hover {
+  cursor: pointer;
+  color: #ff5861;
+}
+
+.login-modal-input {
+  padding: .5rem;
+  width: 100%;
+  border: 2px solid black;
+}
+
+.login-modal-button {
+  width: 100%;
+  height: 3rem;
+  border: 2px solid black;
+  background-color: #ff5861;
+  box-shadow: 2px 2px black;
+}
+
+.login-modal-button:hover {
+  background-color: #b5474c;
+  cursor: pointer;
+}
+
+.disabled-login-button {
+  width: 100%;
+  height: 3rem;
+  border: 2px solid lightgray;
+  box-shadow: 2px 2px lightgray;
+  background-color: white;
+}
+
+.error {
+  color: red;
+}

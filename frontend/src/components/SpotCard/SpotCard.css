@@ -1,5 +1,6 @@
 .spot-card {
-  width: 25rem;
+  max-width: 20rem;
+  min-width: 10rem;
 }
 
 .spot-card:hover {
@@ -9,7 +10,7 @@
 .spot-image {
   border-radius: 15px;
   width: 100%;
-  height: 25rem;
+  aspect-ratio: 1/1;
   object-fit: cover;
 }
 

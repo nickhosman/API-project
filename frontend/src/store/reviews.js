@@ -1,8 +1,10 @@
 import { csrfFetch } from "./csrf";
+import * as spotActions from "./spots";
 
 const LOAD = "reviews/loadReviews";
 const DELETE = "reviews/removeReview";
 const ADD = "reviews/addReview";
+const CLEAR = "reviews/clearReviews";
 
 const loadReviews = (reviews) => {
   return {
@@ -22,6 +24,12 @@ const addReview = (review) => {
   return {
     type: ADD,
     payload: review,
+  };
+};
+
+export const clearReviews = () => {
+  return {
+    type: CLEAR,
   };
 };
 
@@ -71,6 +79,7 @@ export const createReview = (review, spotId, user) => async (dispatch) => {
     // console.log(review);
 
     dispatch(addReview(review));
+    dispatch(spotActions.getSpotDetails(spotId));
 
     return review;
   }
@@ -101,6 +110,10 @@ const reviewReducer = (state = initialState, action) => {
       return {
         ...state,
         spot: { ...spotObj },
+      };
+    case CLEAR:
+      return {
+        ...initialState,
       };
     default:
       return state;

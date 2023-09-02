@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
+import { useHistory } from "react-router-dom";
 import "./LoginForm.css";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -16,6 +18,7 @@ function LoginFormModal() {
     setErrors({});
     return dispatch(sessionActions.login({ credential, password }))
       .then(closeModal)
+      .then(history.push("/"))
       .catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) {
@@ -27,8 +30,11 @@ function LoginFormModal() {
   const handleDemo = (e) => {
     e.preventDefault();
     setErrors({});
-    return dispatch(sessionActions.login({ credential: "Demo-lition", password: "password" }))
+    return dispatch(
+      sessionActions.login({ credential: "Demo-lition", password: "password" })
+    )
       .then(closeModal)
+      .then(history.push("/"))
       .catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) {
@@ -39,30 +45,40 @@ function LoginFormModal() {
 
   return (
     <>
-      <h1>Log In</h1>
       <form onSubmit={handleSubmit} className="login-modal">
-        <label className="login-label">
-          Username or Email
-          <input
-            type="text"
-            value={credential}
-            onChange={(e) => setCredential(e.target.value)}
-            required
-          />
-        </label>
-        <label className="login-label">
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        {errors.credential && <p>{errors.credential}</p>}
-        <button type="submit" disabled={credential.length < 4 || password.length < 6 ? true : false}>Log In</button>
-        </form>
-        <button type="submit" onClick={handleDemo}>Log in as Demo User</button>
+        <h1>Log In</h1>
+        {errors.credential && <p className="error">{errors.credential}</p>}
+        <input
+          type="text"
+          value={credential}
+          onChange={(e) => setCredential(e.target.value)}
+          required
+          placeholder="Username or Email"
+          className="login-modal-input"
+        />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          placeholder="Password"
+          className="login-modal-input"
+        />
+        <button
+          type="submit"
+          disabled={credential.length < 4 || password.length < 6 ? true : false}
+          className={
+            credential.length < 4 || password.length < 6
+              ? "disabled-login-button"
+              : "login-modal-button"
+          }
+        >
+          Log In
+        </button>
+        <p className="demo-login" onClick={handleDemo}>
+          Log in as Demo User
+        </p>
+      </form>
     </>
   );
 }

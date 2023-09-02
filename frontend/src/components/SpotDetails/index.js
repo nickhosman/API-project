@@ -13,11 +13,14 @@ export default function SpotDetails() {
   const dispatch = useDispatch();
   const spot = useSelector((state) => state.spots.singleSpot);
   const reviews = useSelector((state) => state.reviews.spot);
-  const user = useSelector((state) => state.session.user);
+  let user = useSelector((state) => state.session.user);
   let index = 0;
   // console.log(spot);
+  if (!user) user = "No user";
 
   useEffect(() => {
+    dispatch(spotActions.resetSpot());
+    dispatch(reviewActions.clearReviews());
     dispatch(spotActions.getSpotDetails(spotId));
     dispatch(reviewActions.getSpotReviews(spotId));
   }, [dispatch, spotId]);
@@ -51,14 +54,6 @@ export default function SpotDetails() {
       <div className="spot-detail">
         <h1>{spot.name}</h1>
         <section>
-          <i className="fa-solid fa-star fa-xs"></i>
-          {isNaN(avgRating) ? "New" : avgRating}{" "}
-          {parseInt(spot.numReviews) > 1
-            ? " ‧ " + spot.numReviews + " reviews "
-            : parseInt(spot.numReviews) === 1
-            ? " ‧ 1 review "
-            : ""}
-          {" ‧ "}
           {spot.city}, {spot.state}, {spot.country}
           <div className="img-wrapper">
             {spot.SpotImages
@@ -87,35 +82,46 @@ export default function SpotDetails() {
               <div className="spot-image-5"></div>
             ) : null}
           </div>
-          <div className="spot-info">
-            <h2>
-              Hosted by {spot.Owner.firstName} {spot.Owner.lastName}
-            </h2>
-            <p>{spot.description}</p>
-          </div>
-          <div className="callout-info">
-            <span className="spot-price">${spot.price} night</span>
-            <button className="reserve-button" onClick={handleClick}>
-              Reserve
-            </button>
+          <div className="spot-details">
+            <div className="spot-info">
+              <h2>
+                Hosted by {spot.Owner.firstName} {spot.Owner.lastName}
+              </h2>
+              <p>{spot.description}</p>
+            </div>
+            <div className="callout-wrapper">
+              <div className="callout-info">
+                <span className="spot-price-reviews">
+                  <h2>${spot.price}</h2> night
+                </span>
+                <div className="callout-reviews">
+                  <i className="fa-solid fa-star fa-xs"></i>
+                  {isNaN(avgRating) ? "New" : avgRating}{" "}
+                  {parseInt(spot.numReviews) > 1
+                    ? " ‧ " + spot.numReviews + " reviews "
+                    : parseInt(spot.numReviews) === 1
+                    ? " ‧ 1 review "
+                    : ""}
+                </div>
+              </div>
+              <button className="reserve-button" onClick={handleClick}>
+                Reserve
+              </button>
+            </div>
           </div>
         </section>
       </div>
       <section className="review-wrapper">
-        <div
-          className={
-            Object.values(reviews).length > 0 ? "review-header" : "hidden"
-          }
-        >
+        <div className="review-header">
           <i className="fa-solid fa-star"></i>
-          <h3>
+          <h2>
             {isNaN(avgRating) ? "New" : avgRating}{" "}
             {parseInt(spot.numReviews) > 1
               ? " ‧ " + spot.numReviews + " reviews "
               : parseInt(spot.numReviews) === 1
               ? " ‧ 1 review "
               : ""}
-          </h3>
+          </h2>
         </div>
         {spot.ownerId !== user.id &&
         !reviewAuthors.includes(user.id) &&
