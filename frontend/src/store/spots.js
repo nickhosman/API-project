@@ -76,6 +76,8 @@ export const getSpotDetails = (spotId) => async (dispatch) => {
     const spot = await response.json();
     dispatch(getSpot(spot));
   }
+
+  return response;
 };
 
 export const createSpot = (spot) => async (dispatch) => {

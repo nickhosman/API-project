@@ -5,15 +5,22 @@ import { NavLink } from "react-router-dom";
 import * as spotActions from "../../store/spots";
 import SpotCard from "../SpotCard";
 import "../SpotIndex/SpotIndex.css";
+import { useHistory } from "react-router-dom";
 
 export default function ManageSpots() {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const user = useSelector((state) => state.session.user);
   const spots = useSelector((state) => state.spots.allSpots.Spots);
 
   useEffect(() => {
-    dispatch(spotActions.clearSpots());
-    dispatch(spotActions.getOwnedSpots());
-  }, [dispatch]);
+    if (user) {
+      dispatch(spotActions.clearSpots());
+      dispatch(spotActions.getOwnedSpots());
+    }
+  }, [dispatch, user]);
+
+  if (!user) return history.push("/");
 
   if (!spots) return null;
 
