@@ -1,4 +1,48 @@
-.confirm-delete {
-  background-color: red;
+.delete-spot-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  gap: 1rem;
+}
+
+.delete-spot-modal > p {
+  font-size: 20px;
+}
+
+.delete-button-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  width: 100%;
+  height: fit-content;
+}
+
+.delete-button-wrapper > button {
+  height: 4rem;
+  width: 100%;
   color: white;
+  font-size: 18px;
+  border: 2px solid black;
+  box-shadow: 2px 2px black;
+}
+
+.delete-button-wrapper > button:hover {
+  cursor: pointer;
+}
+
+.confirm-delete {
+  background-color: #ff5861;
+}
+
+.confirm-delete:hover {
+  background-color: #b5474c;
+}
+
+.cancel-delete {
+  background-color: #666666;
+}
+
+.cancel-delete:hover {
+  background-color: gray;
 }

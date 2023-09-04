@@ -6,7 +6,6 @@ import ReviewDeleteModal from "../ReviewDeleteModal";
 export default function ReviewTile({ review, userId }) {
   // console.log("review:", review);
 
-
   const getMonthYear = (date) => {
     const months = [
       "January",
@@ -31,8 +30,11 @@ export default function ReviewTile({ review, userId }) {
   return (
     <div className="review-tile">
       <div className="review-info">
-        <h4>{review.User.firstName}</h4>
-        <span>{getMonthYear(review.createdAt)}</span>
+        <i className="user-icon fa-solid fa-circle-user fa-2xl"></i>
+        <div className="user-info">
+          <h4>{review.User.firstName}</h4>
+          <span>{getMonthYear(review.createdAt)}</span>
+        </div>
       </div>
       <p>{review.review}</p>
       {userId === review.User.id ? (

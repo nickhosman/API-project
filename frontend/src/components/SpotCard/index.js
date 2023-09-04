@@ -45,7 +45,7 @@ export default function SpotCard({ spotInfo, manage }) {
           </span>
         </NavLink>
         {manage === true ? (
-          <span>
+          <span className="spot-card-button-wrapper">
             <button onClick={handleUpdateClick}>Update</button>
             <OpenModalButton
               modalComponent={<ModalSpotDelete spotId={spotInfo.id} />}

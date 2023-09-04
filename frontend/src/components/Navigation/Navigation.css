@@ -124,3 +124,7 @@ a {
   border-radius: 12px;
   width: fit-content;
 }
+
+.create-spot-btn:hover {
+  color: #ff5861;
+}

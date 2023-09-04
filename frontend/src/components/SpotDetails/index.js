@@ -125,7 +125,7 @@ export default function SpotDetails() {
         </div>
         {spot.ownerId !== user.id &&
         !reviewAuthors.includes(user.id) &&
-        user ? (
+        user !== "No user" ? (
           <OpenModalButton
             modalComponent={<CreateReviewModal spotId={spotId} user={user} />}
             buttonText="Post Your Review"
