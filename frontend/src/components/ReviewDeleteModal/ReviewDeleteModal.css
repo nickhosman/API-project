@@ -1,0 +1,11 @@
+.review-delete-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  padding: 2rem;
+}
+
+.review-delete-wrapper > p {
+  font-size: 20px;
+}

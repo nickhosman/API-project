@@ -4,6 +4,7 @@ import { useModal } from "../../context/Modal";
 import * as reviewActions from "../../store/reviews";
 import * as spotActions from "../../store/spots";
 import { useDispatch } from "react-redux";
+import "./ReviewDeleteModal.css";
 
 export default function ReviewDeleteModal({ review }) {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ export default function ReviewDeleteModal({ review }) {
   };
 
   return (
-    <>
+    <div className="review-delete-wrapper">
       <h1>Confirm Delete</h1>
       <p>Are you sure you want to remove this review?</p>
       <div className="delete-button-wrapper">
@@ -34,9 +35,9 @@ export default function ReviewDeleteModal({ review }) {
           Yes (Delete Review)
         </button>
         <button className="cancel-delete" onClick={closeModal}>
-          No (Keep Spot)
+          No (Keep Review)
         </button>
       </div>
-    </>
+    </div>
   );
 }

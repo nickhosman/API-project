@@ -1,12 +1,41 @@
-/* button {
-  background-color: rgb(245, 50, 50);
-  border-radius: 50px;
-  height: 2rem;
-  border: none;
-  color: white;
-} */
+.signup-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  width: 30rem;
+  gap: 1.5rem;
+}
 
-/* button:hover {
-  background-color: rgb(190, 35, 35);
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.signup-modal-input {
+  padding: .5rem;
+  width: 100%;
+  border: 2px solid black;
+}
+
+.signup-modal-button {
+  height: 3rem;
+  background-color: #ff5861;
+  border: 2px solid black;
+  box-shadow: 2px 2px black;
+  color: white;
+  font-size: 18px;
+}
+
+.signup-modal-button:hover {
+  background-color: #b5474c;
   cursor: pointer;
-} */
+}
+
+.disabled-signup-modal-button {
+  height: 3rem;
+  font-size: 18px;
+  background-color: white;
+}

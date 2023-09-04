@@ -21,7 +21,7 @@ export default function ModalSpotDelete({ spotId }) {
   };
 
   return (
-    <>
+    <div className="delete-spot-modal">
       <h1>Confirm Delete</h1>
       <p>Are you sure you want to remove this spot?</p>
       <div className="delete-button-wrapper">
@@ -37,6 +37,6 @@ export default function ModalSpotDelete({ spotId }) {
           No (Keep Spot)
         </button>
       </div>
-    </>
+    </div>
   );
 }

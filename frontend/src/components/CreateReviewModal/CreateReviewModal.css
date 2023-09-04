@@ -3,14 +3,21 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2rem;
-  height: 50rem;
+  gap: 1.5rem;
+  height: fit-content;
   width: 30rem;
+  padding: 2rem;
 }
 
 .create-review-wrapper h1 {
   padding: 0px;
   margin-bottom: 0px;
+}
+
+.review-input {
+  resize: none;
+  width: 100%;
+  height: 8rem;
 }
 
 .star-container {
@@ -19,4 +26,29 @@
 
 .star {
   cursor: pointer;
+}
+
+.create-review-btn {
+  height: 4rem;
+  padding: .5rem;
+  width: 100%;
+  background-color: #ff5861;
+  color: white;
+  font-size: 18px;
+  border: 2px solid black;
+  box-shadow: 2px 2px black;
+}
+
+.create-review-btn:hover {
+  background-color: #b5474c;
+  cursor: pointer;
+}
+
+.disabled-review-btn {
+  height: 4rem;
+  padding: .5rem;
+  width: 100%;
+  background-color: white;
+  box-shadow: 2px 2px gray;
+  font-size: 18px;
 }

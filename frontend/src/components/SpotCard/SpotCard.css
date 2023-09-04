@@ -30,3 +30,23 @@
   align-items: center;
   gap: 0.3rem;
 }
+
+.spot-card-button-wrapper {
+  display: flex;
+  gap: 1rem;
+  padding-top: 1rem;
+}
+
+.spot-card-button-wrapper > button {
+  height: 1.5rem;
+  width: 4rem;
+  border: 2px solid black;
+  box-shadow: 2px 2px black;
+  color: white;
+  background-color: #666666;
+}
+
+.spot-card-button-wrapper > button:hover {
+  background-color: gray;
+  cursor: pointer;
+}

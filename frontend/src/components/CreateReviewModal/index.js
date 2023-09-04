@@ -51,20 +51,20 @@ export default function CreateReviewModal({ spotId, user }) {
                   <i
                     className={
                       activeRating >= data
-                        ? "fa-solid fa-star fa-xl"
-                        : "fa-regular fa-star fa-xl"
+                        ? "fa-solid fa-star fa-2xl"
+                        : "fa-regular fa-star fa-2xl"
                     }
                     onMouseEnter={() => setActiveRating(data)}
                     onMouseLeave={() => setActiveRating(rating)}
                     onClick={() => onChange(data)}
                   ></i>
                 </div>
-              );
-            })}
+                );
+              })}
           </div>
         }
       </div>
-      <button>Submit Your Review</button>
+      <button disabled={rating < 1 || review.length < 10} className={rating < 1 || review.length < 10 ? "disabled-review-btn" : "create-review-btn"}>Submit Your Review</button>
     </form>
   );
 }

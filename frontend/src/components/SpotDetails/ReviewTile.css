@@ -1,1 +1,35 @@
+.review-tile {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
 
+.review-tile > button {
+  width: 4rem;
+  height: 2rem;
+  background-color: #666666;
+  color: white;
+}
+
+.review-tile > button:hover {
+  cursor: pointer;
+  background-color: gray;
+}
+
+.review-wrapper {
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.review-info {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.review-info > div > span {
+  color: grey;
+  font-size: 14px;
+}

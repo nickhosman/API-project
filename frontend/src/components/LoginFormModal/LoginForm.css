@@ -30,6 +30,8 @@
 .login-modal-button {
   width: 100%;
   height: 3rem;
+  color: white;
+  font-size: 18px;
   border: 2px solid black;
   background-color: #ff5861;
   box-shadow: 2px 2px black;
@@ -46,6 +48,8 @@
   border: 2px solid lightgray;
   box-shadow: 2px 2px lightgray;
   background-color: white;
+  color: lightgray;
+  font-size: 18px;
 }
 
 .error {

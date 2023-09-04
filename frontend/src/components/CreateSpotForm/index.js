@@ -26,14 +26,42 @@ export default function CreateSpotForm({ edit }) {
   const [errors, setErrors] = useState({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
+  const checkFiletype = (url) => {
+    if (url) {
+      if (
+        !url.split(".").includes("jpeg") &&
+        !url.split(".").includes("jpg") &&
+        !url.split(".").includes("png")
+      ) {
+        return true;
+      } else return false;
+    } else return false;
+  };
+
   useEffect(() => {
     const valErrors = {};
 
     if (description.length < 30)
       valErrors["description"] = "Description needs 30 or more characters";
 
+    if (checkFiletype(previewImageURL))
+      valErrors["previewImageUrl"] =
+        "Image URL must end in .png, .jpg, or .jpeg";
+
+    if (checkFiletype(otherImage1))
+      valErrors["otherImage1"] = "Image URL must end in .png, .jpg, or .jpeg";
+
+    if (checkFiletype(otherImage2))
+      valErrors["otherImage2"] = "Image URL must end in .png, .jpg, or .jpeg";
+
+    if (checkFiletype(otherImage3))
+      valErrors["otherImage3"] = "Image URL must end in .png, .jpg, or .jpeg";
+
+    if (checkFiletype(otherImage4))
+      valErrors["otherImage4"] = "Image URL must end in .png, .jpg, or .jpeg";
+
     setErrors(valErrors);
-  }, [description]);
+  }, [description, previewImageURL, otherImage1, otherImage2, otherImage3, otherImage4]);
 
   useEffect(() => {
     if (edit && Object.keys(spot).length > 0) {
@@ -119,7 +147,7 @@ export default function CreateSpotForm({ edit }) {
 
         Promise.all(promiseArr);
 
-        history.push(`/spots/${data.id}`)
+        history.push(`/spots/${data.id}`);
       }
     } else {
       csrfFetch(`/api/spots/${spot.id}`, {
@@ -136,13 +164,15 @@ export default function CreateSpotForm({ edit }) {
       <h1>{edit ? "Update your Spot" : "Create a New Spot"}</h1>
       <form onSubmit={handleSubmit}>
         <section className="location-wrapper">
-          <h2>Where's your place located?</h2>
-          <p>
-            Guests will only get your exact address once they've booked a
-            reservation.
-          </p>
+          <div className="form-details">
+            <h2>Where's your place located?</h2>
+            <p>
+              Guests will only get your exact address once they've booked a
+              reservation.
+            </p>
+          </div>
           <label>
-            Country
+            <p>Country</p>
             <input
               type="text"
               placeholder="Country"
@@ -152,7 +182,7 @@ export default function CreateSpotForm({ edit }) {
             />
           </label>
           <label>
-            Street address
+            <p>Street address</p>
             <input
               type="text"
               placeholder="Street Address"
@@ -161,26 +191,28 @@ export default function CreateSpotForm({ edit }) {
               onChange={(e) => setAddress(e.target.value)}
             />
           </label>
-          <label>
-            City
-            <input
-              type="text"
-              placeholder="City"
-              required
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-            />
-          </label>
-          <label>
-            State
-            <input
-              type="text"
-              placeholder="State"
-              required
-              value={state}
-              onChange={(e) => setState(e.target.value)}
-            />
-          </label>
+          <div className="city-state-wrapper">
+            <label className="city-input">
+              <p>City</p>
+              <input
+                type="text"
+                placeholder="City"
+                required
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+              />
+            </label>
+            <label className="state-input">
+              <p>State</p>
+              <input
+                type="text"
+                placeholder="State"
+                required
+                value={state}
+                onChange={(e) => setState(e.target.value)}
+              />
+            </label>
+          </div>
         </section>
         <section className="description-wrapper">
           <h2>Describe your place to guests</h2>
@@ -211,13 +243,14 @@ export default function CreateSpotForm({ edit }) {
             />
           </label>
         </section>
-        <section>
+        <section className="form-price-wrapper">
           <h2>Set a base price for your spot</h2>
           <p>
             Competitive pricing can help your listing stand out and rank higher
             in search results
           </p>
           <label>
+            <i className="fa-solid fa-dollar-sign fa-lg"></i>
             <input
               type="number"
               placeholder="Price per night (USD)"
@@ -228,7 +261,7 @@ export default function CreateSpotForm({ edit }) {
           </label>
         </section>
         {edit ? null : (
-          <section>
+          <section className="form-img-wrapper">
             <h2>Liven up your spot with photos</h2>
             <p>Submit a link to at least one photo to publish your spot.</p>
             <label>
@@ -239,30 +272,45 @@ export default function CreateSpotForm({ edit }) {
                 value={previewImageURL}
                 onChange={(e) => setPreviewImageURL(e.target.value)}
               />
+              {errors.previewImageUrl && hasSubmitted ? (
+                <p className="errors">{errors.previewImageUrl}</p>
+              ) : null}
               <input
                 type="url"
                 placeholder="Image URL"
                 value={otherImage1}
                 onChange={(e) => setOtherImage1(e.target.value)}
               />
+              {errors.otherImage1 && hasSubmitted ? (
+                <p className="errors">{errors.otherImage1}</p>
+              ) : null}
               <input
                 type="url"
                 placeholder="Image URL"
                 value={otherImage2}
                 onChange={(e) => setOtherImage2(e.target.value)}
               />
+              {errors.otherImage2 && hasSubmitted ? (
+                <p className="errors">{errors.otherImage2}</p>
+              ) : null}
               <input
                 type="url"
                 placeholder="Image URL"
                 value={otherImage3}
                 onChange={(e) => setOtherImage3(e.target.value)}
               />
+              {errors.otherImage3 && hasSubmitted ? (
+                <p className="errors">{errors.otherImage3}</p>
+              ) : null}
               <input
                 type="url"
                 placeholder="Image URL"
                 value={otherImage4}
                 onChange={(e) => setOtherImage4(e.target.value)}
               />
+              {errors.otherImage4 && hasSubmitted ? (
+                <p className="errors">{errors.otherImage4}</p>
+              ) : null}
             </label>
           </section>
         )}
