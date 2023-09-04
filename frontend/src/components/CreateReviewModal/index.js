@@ -61,6 +61,7 @@ export default function CreateReviewModal({ spotId, user }) {
                 </div>
                 );
               })}
+              Stars
           </div>
         }
       </div>
