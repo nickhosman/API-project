@@ -2,7 +2,6 @@ import React from "react";
 
 import { useModal } from "../../context/Modal";
 import * as reviewActions from "../../store/reviews";
-import * as spotActions from "../../store/spots";
 import { useDispatch } from "react-redux";
 import "./ReviewDeleteModal.css";
 
@@ -11,12 +10,10 @@ export default function ReviewDeleteModal({ review }) {
   const { closeModal } = useModal();
 
   const confirmDelete = (review) => {
-    dispatch(reviewActions.deleteReview(review.id)).catch(async (res) => {
+    dispatch(reviewActions.deleteReview(review)).catch(async (res) => {
       const data = await res.json();
-      console.log("removeReview errors:", data);
+      console.error("removeReview errors:", data);
     });
-
-    dispatch(spotActions.getSpotDetails(review.spotId));
 
     closeModal();
   };

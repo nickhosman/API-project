@@ -233,6 +233,7 @@ export default function CreateSpotForm({ edit }) {
         </section>
         <section className="title-wrapper">
           <h2>Create a title for your spot</h2>
+          <p>Catch guests' attention with a spot title that highlights what makes your place special.</p>
           <label>
             <input
               type="text"
