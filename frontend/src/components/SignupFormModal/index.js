@@ -19,7 +19,7 @@ function SignupFormModal() {
   useEffect(() => {
     let valErrors = {};
 
-    if (password !== confirmPassword)
+    if (password !== confirmPassword && hasSubmitted)
       valErrors["confirmPassword"] =
         "Confirm Password field must be the same as the Password field";
 
@@ -31,7 +31,7 @@ function SignupFormModal() {
 
     setHasSubmitted(true);
 
-    if (Object.values(errors).length < 1) {
+    if (password === confirmPassword) {
       return dispatch(
         sessionActions.signup({
           email,
@@ -45,12 +45,8 @@ function SignupFormModal() {
         .catch(async (res) => {
           const data = await res.json();
           if (data && data.errors) {
-            console.log("error data:", data);
-            if (Object.keys(errors).length > 0) {
-              setErrors({ ...errors, ...data.errors });
-            } else {
-              setErrors(data.errors);
-            }
+            // console.log("error data:", data);
+            setErrors(data.errors);
           }
         });
     }
